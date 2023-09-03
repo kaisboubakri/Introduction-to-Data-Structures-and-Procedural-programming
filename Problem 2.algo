@@ -1,0 +1,57 @@
+ALGORITHM DotProduct;
+
+type
+  Vector = array of Integer;
+
+var
+  vectors: array of Vector;
+  v1, v2: Vector;
+  i, n: Integer;
+
+//Function to calculate the dot product of two vectors
+function Dot_Product(v1, v2: Vector): Integer;
+var
+  j: Integer;
+  result :integer;
+begin
+  if Length(v1) <> Length(v2) then
+    write('Vectors must have the same length');
+
+  Result := 0;
+  for j := 0 to High(v1) do
+    Result := Result + v1[j] * v2[j];
+    dot_product:=Result;
+end;
+
+// Function to check if two vectors are orthogonal
+function AreOrthogonal(v1, v2: Vector): Boolean;
+var
+result :Boolean;
+begin
+  Result := Dot_Product(v1, v2) = 0;
+end;
+
+begin
+  // Initialize vectors 
+  n := 3;  //Number of vector pairs 
+  SetLength(vectors, n * 2);
+  
+  // Assign values to vector pairs 
+  vectors[0] := [1, 2];
+  vectors[1] := [2, -1];
+  vectors[2] := [0, 3];
+  vectors[3] := [4, 0];
+  vectors[4] := [2, 2];
+  vectors[5] := [-1, 1];
+
+  for i := 0 to n - 1 do
+  begin
+    v1 := vectors[i * 2];
+    v2 := vectors[i * 2 + 1];
+
+    if AreOrthogonal(v1, v2) then
+      WriteLn('Vectors are orthogonal')
+    else
+      WriteLn('Vectors are not orthogonal');
+  end;
+END.

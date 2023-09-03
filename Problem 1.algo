@@ -1,0 +1,112 @@
+ALGORITHM SumOfDistinctElements;
+
+const
+  MAX_SIZE = 100;
+
+type
+  IntArray = array [1..MAX_SIZE] of Integer;
+
+Var
+  T1, T2, T: IntArray;
+  Size1, Size2, Size: Integer;
+
+// Procedure to read arrays T1 and T2 along with their sizes
+procedure ReadArray(var T1, T2: IntArray; var Size1, Size2: Integer);
+Var
+  i, j: Integer;
+begin
+  Writeln('Enter the size of array 1: ');
+  Readln(Size1);
+  Writeln('Enter ', Size1, ' elements separated by spaces: ');
+  for i := 1 to Size1 do
+  begin
+    Read(T1[i]);
+  end;
+
+  Writeln('Enter the size of array 2: ');
+  Readln(Size2);
+  Writeln('Enter ', Size2, ' elements separated by spaces: ');
+
+  for j := 1 to Size2 do
+  begin
+    Read(T2[j]);
+  end;
+end;
+
+// Procedure to add distinct elements from T1 and T2 to T
+procedure AddDistinctElement(var T1, T2, T: IntArray; var Size1, Size2, Size: Integer);
+Var
+  i, j: Integer;
+  isDistinct: BOOLEAN;
+begin
+  Size := 0;
+  for i := 1 to Size1 do
+  begin
+    isDistinct := true;
+    for j := 1 to Size do
+    begin
+      if T1[i] = T[j] then
+      BEGIN
+        isDistinct := false;
+        break;
+      end;
+    end;
+    if isDistinct then
+    begin
+      Size := Size + 1;
+      T[Size] := T1[i];
+    end;
+  end;
+  for i := 1 to Size2 do
+  begin
+    isDistinct := true;
+    for j := 1 to Size do
+    begin
+      if T2[i] = T[j] then
+      BEGIN
+        isDistinct := false;
+        break;
+      end;
+    end;
+    if isDistinct then
+    begin
+      Size := Size + 1;
+      T[Size] := T2[i];
+    end;
+  end;
+end;
+
+// Function to calculate the sum of distinct elements in T
+function SumOfDistinctElements(T: IntArray; Size: Integer): Integer;
+Var
+  i, j, sum: Integer;
+  isDistinct: boolean;
+begin
+  sum := 0;
+  for i := 1 to Size do
+  begin
+    isDistinct := true;
+    for j := 1 to i - 1 do
+    begin
+      if T[i] = T[j] then
+      begin
+        isDistinct := false;
+        break;
+      end;
+    end;
+    if isDistinct then
+    begin
+      sum := sum + T[i];
+    end;
+  end;
+  SumOfDistinctElements := sum;
+end;
+
+Var
+  ResultValue: Integer;
+
+begin
+  ReadArray(T1, T2, Size1, Size2);
+  AddDistinctElement(T1, T2, T, Size1, Size2, Size);
+  Writeln('Output: ', SumOfDistinctElements(T, Size));
+end.
